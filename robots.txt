@@ -26,6 +26,7 @@ Disallow: /*?utm_
 Disallow: /*?fbclid=
 
 # Sitemaps
+Sitemap: https://www.jwordenasphaltpaving.com/sitemap-index.xml
 Sitemap: https://www.jwordenasphaltpaving.com/sitemap.xml
 Sitemap: https://www.jwordenasphaltpaving.com/sitemap.txt
 Sitemap: https://www.jwordenasphaltpaving.com/image-sitemap.xml
