@@ -100,7 +100,6 @@ https://www.kansascitypavingpros.com/* https://www.jwordenasphaltpaving.com/loca
 /sealing               /sealcoating    301!
 
 # ============================================================
-# CATCH-ALL PROXY (must be LAST)
-# Any unmatched path is proxied to jwordenlaunch1
+# SPA FALLBACK (must be LAST)
 # ============================================================
-/*    https://jwordenlaunch1.netlify.app/:splat    200!
+/*    /index.html    200
