@@ -1,5 +1,6 @@
 [build]
   base    = "."
+  command = "node scripts/submit-google-search-console.mjs"
   publish = "."
 
 [build.environment]
