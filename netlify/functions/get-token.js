@@ -21,6 +21,10 @@ function b64url(input) {
 }
 
 function signJwt(secret) {
+  if (!secret) {
+    throw new Error('JWT_SECRET_KEY is not set.')
+  }
+
   const nowSeconds = Math.floor(Date.now() / 1000)
   const expiresAt = nowSeconds + TOKEN_TTL_SECONDS
   const header = b64url(JSON.stringify({ alg: 'HS256', typ: 'JWT' }))
@@ -119,7 +123,22 @@ exports.handler = async (event) => {
 
   try {
     const useBackend = String(process.env.USE_BACKEND_TOKEN_ENDPOINT || 'true').toLowerCase() === 'true'
-    const payload = useBackend ? await fetchBackendToken() : signJwt(process.env.JWT_SECRET_KEY || '')
+    let payload
+
+    if (useBackend) {
+      try {
+        payload = await fetchBackendToken()
+      } catch (backendError) {
+        if (process.env.JWT_SECRET_KEY) {
+          payload = signJwt(process.env.JWT_SECRET_KEY)
+        } else {
+          throw backendError
+        }
+      }
+    } else {
+      payload = signJwt(process.env.JWT_SECRET_KEY || '')
+    }
+
     return {
       statusCode: 200,
       headers: { ...headers, 'Content-Type': 'application/json' },
