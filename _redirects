@@ -3,8 +3,15 @@
 # Generated: Architecture B migration
 
 # ============================================================
-# SOURCE PROXY — serve all content from jwordenlaunch1
+# STATIC FILE ESCAPE HATCHES (must come BEFORE SPA fallback)
+# Force Netlify to serve these static files directly, bypassing
+# the /* /index.html 200 SPA fallback that would otherwise return
+# React HTML instead of the actual robots.txt / sitemap files.
 # ============================================================
+/robots.txt    /robots.txt    200!
+/sitemap.xml   /sitemap.xml   200!
+/sitemap.txt   /sitemap.txt   200!
+/image-sitemap.xml   /image-sitemap.xml   200!
 /api/*         https://codexbuildfreeofbase44-production.up.railway.app/api/:splat    200!
 
 # Force canonical host
@@ -101,5 +108,6 @@ https://www.kansascitypavingpros.com/* https://www.jwordenasphaltpaving.com/loca
 
 # ============================================================
 # SPA FALLBACK (must be LAST)
+# Any unmatched path serves the React app's index.html
 # ============================================================
 /*    /index.html    200
